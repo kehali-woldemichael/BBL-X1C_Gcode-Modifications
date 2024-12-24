@@ -1,0 +1,8 @@
+;===== heat-soak ====================
+; only performed if target chamber temperature greater than 30ºC
+{if chamber_temperature[0] > 30} 
+SET_DISPLAY_TEXT MSG="Start of Heat-Soak"
+M1002 gcode_claim_action : 5; LCD Message = "M400 Pause"
+M400 S900; pause for 900sec/15min  
+SET_DISPLAY_TEXT MSG="End of Heat-Soak"
+{endif}

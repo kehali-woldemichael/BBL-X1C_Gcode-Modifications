@@ -1,0 +1,10 @@
+;===== chamber heating ====================
+{if (chamber_temperature[0] < bed_temperature[current_extruder])||(chamber_temperature[0] > 30)} 
+SET_DISPLAY_TEXT MSG="Start of Chamber-Heating"
+G1 X70 F21000 G1 Y245 G1 Y265 F3000 M400; move to poop chute
+M106 P2 S255; Switch chamber fan on at 100%
+M106 P3 S0; Make sure exhaust fan is off
+M1002 gcode_claim_action : 16; LCD Message = "Paused by the user"
+M191 S{chamber_temperature[0]}; Wait for target chamber temperature for first filament
+SET_DISPLAY_TEXT MSG="End of Chamber-Heating"
+{endif}

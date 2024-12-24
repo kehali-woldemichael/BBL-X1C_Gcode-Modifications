@@ -1,0 +1,13 @@
+;===== wipe and shake nozzle ====================
+M1002 gcode_claim_action : 14; "Cleaning nozzle"
+G1 X70 F21000 G1 Y245 G1 Y265 F3000 M400; move to poop chute
+G1 X76 F15000
+G1 X65 F15000
+G1 X76 F15000
+G1 X65 F15000; shake to put down garbage
+G1 X80 F6000
+G1 X95 F15000
+G1 X80 F15000
+G1 X165 F15000; wipe and shake
+M400; wait for previous action to finish before proceeding 
+M1002 gcode_claim_action : 10; "Inspecting first layer"

@@ -1,0 +1,20 @@
+;===== start end procedure =================
+M106 P2 S255; turn on auxillary fan at 100%
+
+{if chamber_temperature[0] >= 40} 
+M1002 gcode_claim_action : 16; LCD Message = "Paused by the user" 
+M190 S{chamber_temperature[0]}; wait for bed temp to cool to chamber temperature 
+M1002 gcode_claim_action : 5; LCD Message = "M400 Pause"
+M106 P3 S255; turn on exhaust fan at 100%
+M191 S40; wait for chamber temperature to cool
+M106 P3 S0; turn off exhaust fan
+
+{elsif chamber_temperature[0] < 40}
+M1002 gcode_claim_action : 5; LCD Message = "M400 Pause"
+M106 P3 S255; turn on exhaust fan at 100%
+M190 S30; wait for bed temp to 30 celcius 
+M106 P3 S0; turn off exhaust fan
+{endif}
+
+M106 P2 S0; turn off auxillary fan 
+M960 S5 P0; turn off logo lamp
